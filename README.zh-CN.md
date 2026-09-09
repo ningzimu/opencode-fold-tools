@@ -4,14 +4,7 @@
 
 为 OpenCode TUI 提供紧凑、可展开的工具输出。每次工具调用按原顺序保留一行输入摘要，点击后在下方展开输出；输入行只改变箭头。
 
-```text
-▸ Read src/example.ts
-▸ Shell npm test
-
-▾ Shell npm test
-  │ ✓ tests passed
-  │ …后续输出…
-```
+![OpenCode 中 Read 和 Shell 工具输出的展开与收起演示](https://raw.githubusercontent.com/ningzimu/opencode-fold-tools/main/assets/demo.gif)
 
 展开的输出区域使用主题背景色和左侧边线，收起后输出及背景一起消失。连续的读取和搜索不会合并分组。
 

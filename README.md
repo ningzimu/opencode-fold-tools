@@ -4,14 +4,7 @@
 
 Compact, expandable tool output for the OpenCode TUI. Each tool call keeps its own input summary in conversation order. Click the summary to reveal its output underneath; only the arrow changes on the input line.
 
-```text
-▸ Read src/example.ts
-▸ Shell npm test
-
-▾ Shell npm test
-  │ ✓ tests passed
-  │ …output continues here…
-```
+![Read and Shell outputs expanding and collapsing in OpenCode](https://raw.githubusercontent.com/ningzimu/opencode-fold-tools/main/assets/demo.gif)
 
 The expanded output has a theme-colored background and a left border. Collapsing it removes the output panel and its background. Consecutive reads and searches are not grouped.
 
