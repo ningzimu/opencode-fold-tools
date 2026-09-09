@@ -99,7 +99,7 @@ export default {
   id: 'opencode-fold-tools',
   async tui(api) {
     let sessionID, allOpen = false, serial = 0
-    const opened = new Set(), widgets = new Map(), hidden = new Map(), owned = new WeakSet(), nativeHeaders = new Map()
+    const opened = new Set(), widgets = new Map(), hidden = new Map(), owned = new WeakSet(), nativeHeaders = new Map(), separate = new WeakSet()
     let disposed = false
     // The host must create tool rows before this plugin can replace them.
     if (api.kv?.get('tool_details_visibility', true) === false) api.kv.set('tool_details_visibility', true)
@@ -199,6 +199,14 @@ export default {
         if (!widget) {
           const root = new anchor.host.constructor(api.renderer, { id: `fold-tools-${++serial}`, flexDirection: 'column', paddingLeft: 3, flexShrink: 0 })
           owned.add(root)
+          if (group.parts[0].tool === 'task') separate.add(root)
+          // Match native inline spacing, skipping the original tool hosts we hide.
+          root.onLifecyclePass = () => {
+            const siblings = children(root.parent)
+            const previous = siblings.slice(0, siblings.indexOf(root)).findLast(node => node.visible !== false && !node.isDestroyed)
+            const margin = separate.has(root) || previous && (previous.height > 1 || separate.has(previous)) ? 1 : 0
+            if (root.marginTop !== margin) root.marginTop = margin
+          }
           const header = text(anchor.node.constructor, '', { maxHeight: 1, overflow: 'hidden', selectable: false })
           const body = new transcript.constructor(api.renderer, { id: `fold-tools-${++serial}`, height: 14, width: '100%', border: ['left'], borderColor: api.theme.current.borderSubtle, backgroundColor: api.theme.current.backgroundPanel, padding: 1, stickyScroll: false, flexShrink: 0 })
           owned.add(body)

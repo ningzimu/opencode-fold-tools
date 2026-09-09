@@ -148,3 +148,21 @@ test('failed patch has expandable error details',async()=>{
   const t=setup([p],[{label:'Patch failed',icon:'%'}]);await plugin.tui(t.api)
   try{t.update();assert.equal(t.widgets().length,1);t.widgets()[0].kids[0].onMouseUp({});assert.match(t.widgets()[0].kids[1].kids[0].content,/missing file/)}finally{t.dispose()}
 })
+
+test('native spacing keeps single-line tools adjacent and separates multiline content',async()=>{
+  const t=setup([part('a','read',{filePath:'a'},'a'),part('b','bash',{command:'echo ok'},'ok')],[{label:'Read a'},{label:'echo ok'}])
+  await plugin.tui(t.api);t.update()
+  const [first,second]=t.widgets()
+  const paragraph=new Box(null,{height:3})
+  t.scroll.insertBefore(paragraph,first)
+  first.onLifecyclePass();assert.equal(first.marginTop,1)
+  first.height=1
+  second.onLifecyclePass();assert.equal(second.marginTop,0)
+  first.height=6
+  second.onLifecyclePass();assert.equal(second.marginTop,1)
+  first.height=1
+  second.onLifecyclePass();assert.equal(second.marginTop,0)
+  paragraph.height=1
+  first.onLifecyclePass();assert.equal(first.marginTop,0)
+  t.dispose()
+})
