@@ -1,0 +1,25 @@
+{
+  "name": "opencode-fold-tools",
+  "version": "0.1.0",
+  "description": "One row per OpenCode tool call. Click to reveal its output, with native file diffs and no exploration grouping.",
+  "type": "module",
+  "license": "MIT",
+  "author": "ningzimu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ningzimu/opencode-fold-tools.git"
+  },
+  "homepage": "https://github.com/ningzimu/opencode-fold-tools#readme",
+  "bugs": "https://github.com/ningzimu/opencode-fold-tools/issues",
+  "keywords": ["opencode", "opencode-plugin", "tui", "fold", "tool-output"],
+  "oc-plugin": ["tui"],
+  "exports": {"./tui": "./index.js"},
+  "files": ["index.js", "scripts", "README.md", "README.zh-CN.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "scripts": {
+    "test": "node --test",
+    "install:plugin": "node scripts/configure.mjs install",
+    "uninstall:plugin": "node scripts/configure.mjs uninstall"
+  },
+  "engines": {"node": ">=22"},
+  "dependencies": {"jsonc-parser": "3.3.1"}
+}
